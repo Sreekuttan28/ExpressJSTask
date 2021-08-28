@@ -1,11 +1,10 @@
-const { response } = require("express");
-const Students = require("../models/Students");
+const {response}= require("express");
+const ClassDetails= require("../models/class");
 
-//show the list of students
 
 const index = (req, res, next) => {
 
-    Students.find()
+    ClassDetails.find()
         .then(response => {
             res.json({
                 response
@@ -22,15 +21,15 @@ const index = (req, res, next) => {
 
 //storing
 const store =(req,res,next) =>{
-    const students =new Students({
-        name:req.body.name,
-        rolNo:req.body.rolNo,
-        phone: req.body.phone
+    const classValues =new ClassDetails({
+        standard:req.body.standard,
+        division:req.body.division,
+    
     })
-    students.save()
+    classValues.save()
     .then(response =>{
         res.json({
-            message:'Student Added Sucessfully!'
+            message:'Class details added Sucessfully!'
         })
     })
     .catch( error =>{
@@ -40,19 +39,19 @@ const store =(req,res,next) =>{
     })
 }
 
-//udpdate an Student
+//udpdate an class
 const update =(req,res,next)=>{
-    let studentrol =req.body.studentrol
+    let classId =req.body.classId
 
     let updatedData ={
-        name: req.body.name,
-        rolNo: req.body.rolNo,
-        phone: req.body.phone
+        standard: req.body.standard,
+        division: req.body.division,
+        
     }
-    Students.findByIdAndUpdate(studentrol,{$set:updatedData})
+    ClassDetails.findByIdAndUpdate(classId,{$set:updatedData})
     .then(()=>{
         res.json({
-            message:'Student updated Successfully! '
+            message:'class details updated Successfully! '
         })
     })
     .catch(error=>{
@@ -62,13 +61,13 @@ const update =(req,res,next)=>{
     })
 
 }
-//delete an Student
+//delete an class
 const destroy =(req,res,next) =>{
-    let studentrol =req.body.studentrol
-    Students.findByIdAndRemove(studentrol)
+    let classId =req.body.classId
+    ClassDetails.findByIdAndRemove(classId)
     .then(()=>{
         res.json({
-            message:'Student deleted successfully!'
+            message:`class id ${classId} is deleted successfully!`
         })
     })
     .catch(error =>{

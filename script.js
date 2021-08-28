@@ -5,6 +5,7 @@ const bodyParser= require('body-parser');
 
 const StudentRoute = require('./routes/student');
 const TeacherRoute = require('./routes/teacher');
+const classRoute =require('./routes/classroute');
 
 mongoose.connect('mongodb://localhost:27017/testdb',{useNewUrlParser : true, useUnifiedTopology: true});
 const db=mongoose.connection;
@@ -29,5 +30,6 @@ app.listen(PORT,()=>{
     
 })
 
-app.use('/api/student',StudentRoute);
+app.use('/api/students',StudentRoute);
 app.use('/api/teacher',TeacherRoute);
+app.use('/api/classes',classRoute);
